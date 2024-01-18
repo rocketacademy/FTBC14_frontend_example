@@ -1,11 +1,12 @@
 import { useState } from "react";
 
-function UserForm(props) {
+export default function EditModal(props) {
+  console.log(props);
   const [student, setStudentInfo] = useState({
-    name: "",
-    age: 0,
-    course: "",
-    gender: false,
+    name: props.editingInfo.name || "",
+    age: props.editingInfo.age || 0,
+    course: props.editingInfo.course || "",
+    gender: props.editingInfo.gender || false,
   });
 
   const handleSelect = (e) => {
@@ -19,21 +20,21 @@ function UserForm(props) {
     e.preventDefault();
     console.log(student);
 
-    let response = await props.axios.post(
-      `${import.meta.env.VITE_SOME_BACKEND_URL}/students`,
+    let response = await props.axios.put(
+      `${import.meta.env.VITE_SOME_BACKEND_URL}/students/${
+        props.editingInfo.id
+      }`,
       student
     );
-    console.log(response);
-
-    props.setStudents((prevState) => {
-      return [...prevState, response.data[0]];
-    });
 
     setStudentInfo({
       name: "",
       age: 0,
       course: "",
     });
+    props.setStudents(response.data);
+
+    props.setShowEditModal(false);
   };
 
   const handleChange = (e) => {
@@ -47,8 +48,6 @@ function UserForm(props) {
 
   return (
     <>
-      <props.Link to="/"> Home</props.Link>
-
       <form onSubmit={handleSubmit}>
         <label>Name</label>
         <input
@@ -84,5 +83,3 @@ function UserForm(props) {
     </>
   );
 }
-
-export default UserForm;
