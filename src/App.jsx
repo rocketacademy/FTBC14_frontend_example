@@ -23,10 +23,10 @@ function App() {
     getData();
   }, []);
 
-  const handleDelete = async (name) => {
+  const handleDelete = async (id) => {
     try {
       let data = await axios.delete(
-        `${import.meta.env.VITE_SOME_BACKEND_URL}/students/${name}`
+        `${import.meta.env.VITE_SOME_BACKEND_URL}/students/${id}`
       );
       let unPacked = data.data;
       console.log(unPacked);
@@ -45,14 +45,14 @@ function App() {
 
         <h1>Rocket Students</h1>
         {students && students.length > 0 ? (
-          students.map((element, index) => {
+          students.map((element) => {
             return (
-              <div key={index}>
+              <div key={element.id}>
                 <h1>{element.name}</h1>
                 <h4>
                   {element.course} - {element.age}
                 </h4>
-                <button onClick={() => handleDelete(element.name)}>
+                <button onClick={() => handleDelete(element.id)}>
                   Delete Me
                 </button>
               </div>

@@ -6,10 +6,19 @@ function UserForm(props) {
     name: "",
     age: 0,
     course: "",
+    gender: false,
   });
+
+  const handleSelect = (e) => {
+    console.log(e.target.value);
+    setStudentInfo((prevState) => {
+      return { ...prevState, gender: e.target.value };
+    });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(student);
 
     let response = await axios.post(
       `${import.meta.env.VITE_SOME_BACKEND_URL}/students`,
@@ -17,7 +26,9 @@ function UserForm(props) {
     );
     console.log(response);
 
-    props.setStudents(response.data);
+    props.setStudents((prevState) => {
+      return [...prevState, response.data[0]];
+    });
 
     setStudentInfo({
       name: "",
@@ -62,6 +73,11 @@ function UserForm(props) {
             onChange={handleChange}
             placeholder="Add student course"
           />
+          <label>Gender</label>
+          <select onChange={handleSelect} defaultValue={student.gender}>
+            <option value={true}>Male</option>
+            <option value={false}>Female</option>
+          </select>
 
           <input value="submit" type="submit" />
         </form>
