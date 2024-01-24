@@ -3,9 +3,9 @@ import { useState } from "react";
 export default function EditModal(props) {
   console.log(props);
   const [student, setStudentInfo] = useState({
-    name: props.editingInfo.name || "",
-    age: props.editingInfo.age || 0,
-    course: props.editingInfo.course || "",
+    firstName: props.editingInfo.firstName || "",
+    lastName: props.editingInfo.lastName || "",
+    email: props.editingInfo.email || "",
     gender: props.editingInfo.gender || false,
   });
 
@@ -28,9 +28,10 @@ export default function EditModal(props) {
     );
 
     setStudentInfo({
-      name: "",
-      age: 0,
-      course: "",
+      firstName: "",
+      lastName: "",
+      email: 0,
+      gender: false,
     });
     props.setStudents(response.data);
 
@@ -49,28 +50,28 @@ export default function EditModal(props) {
   return (
     <>
       <form onSubmit={handleSubmit}>
-        <label>Name</label>
+        <label>First Name</label>
         <input
           type="text"
-          name="name"
-          value={student.name}
+          name="firstName"
+          value={student.firstName}
           onChange={handleChange}
-          placeholder="Add student name"
+          placeholder="Add student first name"
         />
-        <label>Age</label>
-        <input
-          type="number"
-          name="age"
-          value={student.age}
-          onChange={handleChange}
-        />
-        <label>Course</label>
+        <label>Last Name</label>
         <input
           type="text"
-          name="course"
-          value={student.course}
+          name="lastName"
+          value={student.lastName}
           onChange={handleChange}
-          placeholder="Add student course"
+          placeholder="Add student last name"
+        />
+        <label>Email</label>
+        <input
+          type="text"
+          name="email"
+          value={student.email}
+          onChange={handleChange}
         />
         <label>Gender</label>
         <select onChange={handleSelect} defaultValue={student.gender}>

@@ -5,13 +5,15 @@ export default function UserProfile(props) {
   const { id } = useParams();
   const [user, setUser] = useState({});
 
+  console.log("id", id);
+
   useEffect(() => {
     const getData = async () => {
       try {
         let data = await props.axios.get(
           `${import.meta.env.VITE_SOME_BACKEND_URL}/students/${id}`
         );
-        let unPacked = data.data[0];
+        let unPacked = data.data;
         console.log(unPacked);
         setUser(unPacked);
       } catch (err) {
@@ -27,9 +29,11 @@ export default function UserProfile(props) {
       <props.Link to="/form"> Form</props.Link>
 
       <h1>Profile</h1>
-      <h1>{user.name}</h1>
+      <h1>
+        {user.firstName} {user.lastName}
+      </h1>
       <h4>
-        {user.course} - {user.age} - {user.gender ? "male" : "female"}
+        {user.email} - {user.gender == true ? "Male" : "Female"}
       </h4>
     </div>
   );

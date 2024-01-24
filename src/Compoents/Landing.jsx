@@ -58,9 +58,12 @@ export default function Landing(props) {
             props.students.map((element) => {
               return (
                 <div key={element.id}>
-                  <h1>{element.name}</h1>
+                  <h1>
+                    {element.firstName} {element.lastName}
+                  </h1>
                   <h4>
-                    {element.course} - {element.age}
+                    {element.email} -{" "}
+                    {element.gender == true ? "Male" : "Female"}
                   </h4>
                   <props.Link to={`/profile/${element.id}`}>Profile</props.Link>
                   <button onClick={() => handleEditModal(element)}>

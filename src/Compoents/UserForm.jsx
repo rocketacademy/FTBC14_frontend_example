@@ -2,9 +2,9 @@ import { useState } from "react";
 
 function UserForm(props) {
   const [student, setStudentInfo] = useState({
-    name: "",
-    age: 0,
-    course: "",
+    firstName: "",
+    lastName: "",
+    email: 0,
     gender: false,
   });
 
@@ -30,9 +30,10 @@ function UserForm(props) {
     });
 
     setStudentInfo({
-      name: "",
-      age: 0,
-      course: "",
+      firstName: "",
+      lastName: "",
+      email: 0,
+      gender: false,
     });
   };
 
@@ -50,28 +51,28 @@ function UserForm(props) {
       <props.Link to="/"> Home</props.Link>
 
       <form onSubmit={handleSubmit}>
-        <label>Name</label>
+        <label>First Name</label>
         <input
           type="text"
-          name="name"
-          value={student.name}
+          name="firstName"
+          value={student.firstName}
           onChange={handleChange}
-          placeholder="Add student name"
+          placeholder="Add student first name"
         />
-        <label>Age</label>
-        <input
-          type="number"
-          name="age"
-          value={student.age}
-          onChange={handleChange}
-        />
-        <label>Course</label>
+        <label>Last Name</label>
         <input
           type="text"
-          name="course"
-          value={student.course}
+          name="lastName"
+          value={student.lastName}
           onChange={handleChange}
-          placeholder="Add student course"
+          placeholder="Add student last name"
+        />
+        <label>Email</label>
+        <input
+          type="text"
+          name="email"
+          value={student.email}
+          onChange={handleChange}
         />
         <label>Gender</label>
         <select onChange={handleSelect} defaultValue={student.gender}>
