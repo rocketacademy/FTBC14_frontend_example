@@ -6,6 +6,8 @@ import { createBrowserRouter, RouterProvider, Link } from "react-router-dom";
 import UserForm from "./Compoents/UserForm.jsx";
 import UserProfile from "./Compoents/UserProfile";
 import Landing from "./Compoents/Landing";
+import Classes from "./Compoents/Classes";
+import UsersClasses from "./Compoents/UsersClasses";
 
 function App() {
   const [students, setStudents] = useState([]);
@@ -29,6 +31,14 @@ function App() {
     {
       path: "/profile/:id",
       element: <UserProfile axios={axios} Link={Link} />,
+    },
+    {
+      path: "/classes",
+      element: <Classes axios={axios} />,
+    },
+    {
+      path: "/users-classes",
+      element: <UsersClasses axios={axios} Link={Link} />,
     },
   ]);
 

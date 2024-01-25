@@ -52,6 +52,8 @@ export default function Landing(props) {
         <div>
           {/* Add a modal to edit the post thats clicked on  */}
           <props.Link to="form"> Form</props.Link>
+          <props.Link to="classes"> Classes</props.Link>
+          <props.Link to="users-classes"> Users Classes</props.Link>
 
           <h1>Rocket Students</h1>
           {props.students && props.students.length > 0 ? (
