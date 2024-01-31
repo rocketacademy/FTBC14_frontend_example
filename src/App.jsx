@@ -1,6 +1,6 @@
 import "./App.css";
 import axios from "axios";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { createBrowserRouter, RouterProvider, Link } from "react-router-dom";
 import UserForm from "./Compoents/UserForm.jsx";
@@ -10,19 +10,70 @@ import Classes from "./Compoents/Classes";
 import UsersClasses from "./Compoents/UsersClasses";
 import ClassesForm from "./Compoents/ClassesForm";
 import AddressForm from "./Compoents/AddressForm";
+import SignUpForm from "./Compoents/SignupForm";
+import LoginForm from "./Compoents/LoginForm";
+// import Cookies from "js-cookie";
 
 function App() {
   const [students, setStudents] = useState([]);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // const [user, setUser] = useState({});
+  const [token, setToken] = useState("");
+  // const [refreshToken, setRefreshToken] = useState("");
+
+  useEffect(() => {
+    // if the user is logged in previously then log them in
+    if (localStorage.getItem("jwtAccessToken")) {
+      setToken(localStorage.getItem("jwtAccessToken"));
+      setIsLoggedIn(true);
+    }
+
+    // Cookies implementation for refresh token - not completed
+    // if (Cookies.get("jwt-token")) {
+    //   console.log("token", Cookies.get("jwt-token"));
+    //   console.log("refresh", Cookies.get("jwt-refresh"));
+
+    //   setToken(Cookies.get("jwt-token"));
+    //   setRefreshToken(Cookies.get("jwt-refresh"));
+    //   setIsLoggedIn(true);
+    // }
+  }, []);
 
   const router = createBrowserRouter([
     {
       path: "/",
       element: (
         <Landing
+          isLoggedIn={isLoggedIn}
+          setIsLoggedIn={setIsLoggedIn}
+          setToken={setToken}
+          // setUser={setUser}
           students={students}
           setStudents={setStudents}
           axios={axios}
           Link={Link}
+        />
+      ),
+    },
+    {
+      path: "/signup",
+      element: (
+        <SignUpForm
+          axios={axios}
+          Link={Link}
+          setIsLoggedIn={setIsLoggedIn}
+          setToken={setToken}
+        />
+      ),
+    },
+    {
+      path: "/login",
+      element: (
+        <LoginForm
+          axios={axios}
+          Link={Link}
+          setIsLoggedIn={setIsLoggedIn}
+          setToken={setToken}
         />
       ),
     },
@@ -48,7 +99,7 @@ function App() {
     },
     {
       path: "/addressForm",
-      element: <AddressForm axios={axios} Link={Link} />,
+      element: <AddressForm axios={axios} Link={Link} token={token} />,
     },
   ]);
 

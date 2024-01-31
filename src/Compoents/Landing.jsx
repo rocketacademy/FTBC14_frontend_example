@@ -52,13 +52,45 @@ export default function Landing(props) {
         <div>
           {/* Add a modal to edit the post thats clicked on  */}
           <div className="flexCenter">
-            <props.Link to="form">User Form</props.Link>
-
-            <props.Link to="class">Classes Form</props.Link>
-
-            <props.Link to="classes"> Classes</props.Link>
-
-            <props.Link to="users-classes"> Users Classes</props.Link>
+            {!props.isLoggedIn ? (
+              <div>
+                <props.Link to="signup">signup Form</props.Link> -
+                <props.Link to="login">login Form</props.Link> -
+                <props.Link to="usersClasses"> Users Classes</props.Link>
+              </div>
+            ) : (
+              <div>
+                {/* <props.Link to="form">User Form</props.Link> */}
+                <props.Link to="class">Classes Form</props.Link>
+                <props.Link to="addressForm">Address Form</props.Link>
+                <props.Link to="classes"> Classes</props.Link>{" "}
+                <button
+                  onClick={async () => {
+                    await props.axios.get(
+                      "http://localhost:8080/auth/signout",
+                      { withCredentials: true }
+                    );
+                    // props.setUser({});
+                    props.setIsLoggedIn(false);
+                    props.setToken("");
+                    localStorage.removeItem("jwtAccessToken");
+                  }}
+                >
+                  Signout
+                </button>
+                {/* <button
+                  onClick={async () => {
+                    let result = await props.axios.get(
+                      "http://localhost:8080/auth/refresh",
+                      { withCredentials: true }
+                    );
+                    console.log(result);
+                  }}
+                >
+                  Refresh
+                </button> */}
+              </div>
+            )}
           </div>
 
           <h1>Rocket Students</h1>

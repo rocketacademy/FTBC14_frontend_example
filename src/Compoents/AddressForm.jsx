@@ -26,7 +26,12 @@ export default function AddressForm(props) {
 
     let response = await props.axios.post(
       `${import.meta.env.VITE_SOME_BACKEND_URL}/addresses`,
-      addressInfo
+      addressInfo,
+      {
+        headers: {
+          Authorization: `Bearer ${props.token}`,
+        },
+      }
     );
     console.log(response);
 
