@@ -51,9 +51,15 @@ export default function Landing(props) {
       ) : (
         <div>
           {/* Add a modal to edit the post thats clicked on  */}
-          <props.Link to="form"> Form</props.Link>
-          <props.Link to="classes"> Classes</props.Link>
-          <props.Link to="users-classes"> Users Classes</props.Link>
+          <div className="flexCenter">
+            <props.Link to="form">User Form</props.Link>
+
+            <props.Link to="class">Classes Form</props.Link>
+
+            <props.Link to="classes"> Classes</props.Link>
+
+            <props.Link to="users-classes"> Users Classes</props.Link>
+          </div>
 
           <h1>Rocket Students</h1>
           {props.students && props.students.length > 0 ? (
@@ -67,6 +73,15 @@ export default function Landing(props) {
                     {element.email} -{" "}
                     {element.gender == true ? "Male" : "Female"}
                   </h4>
+
+                  {element.usersAddresses && element.usersAddresses.length > 0
+                    ? element.usersAddresses.map((usersAddress) => (
+                        <p key={usersAddress.id}>
+                          {usersAddress.address}-
+                          {usersAddress.primaryAddress ? "Primary" : null}
+                        </p>
+                      ))
+                    : null}
                   <props.Link to={`/profile/${element.id}`}>Profile</props.Link>
                   <button onClick={() => handleEditModal(element)}>
                     Edit Me
@@ -75,6 +90,8 @@ export default function Landing(props) {
                   <button onClick={() => handleDelete(element.id)}>
                     Delete Me
                   </button>
+
+                  <props.Link to="/addressForm">Address Form</props.Link>
                 </div>
               );
             })

@@ -8,6 +8,8 @@ import UserProfile from "./Compoents/UserProfile";
 import Landing from "./Compoents/Landing";
 import Classes from "./Compoents/Classes";
 import UsersClasses from "./Compoents/UsersClasses";
+import ClassesForm from "./Compoents/ClassesForm";
+import AddressForm from "./Compoents/AddressForm";
 
 function App() {
   const [students, setStudents] = useState([]);
@@ -29,6 +31,10 @@ function App() {
       element: <UserForm axios={axios} setStudents={setStudents} Link={Link} />,
     },
     {
+      path: "/class",
+      element: <ClassesForm axios={axios} Link={Link} />,
+    },
+    {
       path: "/profile/:id",
       element: <UserProfile axios={axios} Link={Link} />,
     },
@@ -37,8 +43,12 @@ function App() {
       element: <Classes axios={axios} />,
     },
     {
-      path: "/users-classes",
+      path: "/usersClasses",
       element: <UsersClasses axios={axios} Link={Link} />,
+    },
+    {
+      path: "/addressForm",
+      element: <AddressForm axios={axios} Link={Link} />,
     },
   ]);
 

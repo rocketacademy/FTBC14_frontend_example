@@ -36,7 +36,7 @@ export default function Classes(props) {
       }
     );
 
-    navigate("/users-classes");
+    navigate("/usersClasses");
   };
 
   return (
