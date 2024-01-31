@@ -1,9 +1,28 @@
 import { useState, useEffect } from "react";
 import EditModal from "./EditModal";
+import { useAuth0 } from "@auth0/auth0-react";
 
 export default function Landing(props) {
+  const {
+    loginWithRedirect,
+    getAccessTokenSilently,
+    logout,
+    isAuthenticated,
+    user,
+  } = useAuth0();
   const [showEditModal, setShowEditModal] = useState(false);
   const [editingInfo, setEditingInfo] = useState(null);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      console.log(user);
+      props.setUser(user);
+      getAccessTokenSilently().then((token) => {
+        console.log("access token", token);
+      });
+    }
+  });
+
   useEffect(() => {
     const getData = async () => {
       try {
@@ -52,13 +71,23 @@ export default function Landing(props) {
         <div>
           {/* Add a modal to edit the post thats clicked on  */}
           <div className="flexCenter">
-            <props.Link to="form">User Form</props.Link>
+            {/* {isAuthenticated ? ( */}
+            <div>
+              <props.Link to="form">User Form</props.Link>
+              <props.Link to="class">Classes Form</props.Link>
+              <props.Link to="classes"> Classes</props.Link>
+              {/* </div>
+            ) : ( */}
+              <props.Link to="usersClasses"> Users Classes</props.Link>
+              <props.Link to="addressForm"> Address Form</props.Link>
+              {/* )} */}
 
-            <props.Link to="class">Classes Form</props.Link>
-
-            <props.Link to="classes"> Classes</props.Link>
-
-            <props.Link to="users-classes"> Users Classes</props.Link>
+              {isAuthenticated ? (
+                <button onClick={() => logout()}>Log out</button>
+              ) : (
+                <button onClick={() => loginWithRedirect()}>Log In</button>
+              )}
+            </div>
           </div>
 
           <h1>Rocket Students</h1>

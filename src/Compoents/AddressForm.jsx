@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
 
 import Select from "react-select";
 
@@ -10,12 +11,26 @@ const options = [
 ];
 
 export default function AddressForm(props) {
+  const { getAccessTokenSilently, isAuthenticated, user } = useAuth0();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      console.log(user);
+      getUserInfo();
+    }
+    async function getUserInfo() {
+      let token = await getAccessTokenSilently();
+      console.log("token", token);
+      setToken(token);
+    }
+  });
   const navigate = useNavigate();
 
   const [addressInfo, setAddressInfo] = useState({
     address: "",
     primary: false,
   });
+  const [token, setToken] = useState("");
 
   const [selectedOption, setSelectedOption] = useState(1);
 
@@ -23,10 +38,15 @@ export default function AddressForm(props) {
     e.preventDefault();
     console.log(addressInfo);
     addressInfo.userId = selectedOption.value;
-
+    console.log("token", token);
     let response = await props.axios.post(
       `${import.meta.env.VITE_SOME_BACKEND_URL}/addresses`,
-      addressInfo
+      addressInfo,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
     );
     console.log(response);
 
