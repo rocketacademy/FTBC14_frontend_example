@@ -24,15 +24,7 @@ export default function AddressForm(props) {
     console.log(addressInfo);
     addressInfo.userId = selectedOption.value;
 
-    let response = await props.axios.post(
-      `${import.meta.env.VITE_SOME_BACKEND_URL}/addresses`,
-      addressInfo,
-      {
-        headers: {
-          Authorization: `Bearer ${props.token}`,
-        },
-      }
-    );
+    let response = await props.instance.post(`addresses`, addressInfo);
     console.log(response);
 
     setAddressInfo({

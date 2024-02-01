@@ -17,7 +17,8 @@ function ClassesForm(props) {
 
     let response = await props.axios.post(
       `${import.meta.env.VITE_SOME_BACKEND_URL}/classes`,
-      classInfo
+      classInfo,
+      { headers: { Authorization: `Bearer ${props.token}` } }
     );
     console.log(response);
 

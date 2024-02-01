@@ -19,7 +19,13 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   // const [user, setUser] = useState({});
   const [token, setToken] = useState("");
+
   // const [refreshToken, setRefreshToken] = useState("");
+  const instance = axios.create({
+    baseURL: `${import.meta.env.VITE_SOME_BACKEND_URL}/`,
+    timeout: 1000,
+    headers: { Authorization: `Bearer ${token}` },
+  });
 
   useEffect(() => {
     // if the user is logged in previously then log them in
@@ -83,7 +89,7 @@ function App() {
     },
     {
       path: "/class",
-      element: <ClassesForm axios={axios} Link={Link} />,
+      element: <ClassesForm token={token} axios={axios} Link={Link} />,
     },
     {
       path: "/profile/:id",
@@ -99,7 +105,14 @@ function App() {
     },
     {
       path: "/addressForm",
-      element: <AddressForm axios={axios} Link={Link} token={token} />,
+      element: (
+        <AddressForm
+          axios={axios}
+          instance={instance}
+          Link={Link}
+          token={token}
+        />
+      ),
     },
   ]);
 
